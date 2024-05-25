@@ -1,10 +1,47 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="es">
 <head>
-    <title>DonCom</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Simple Page</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Public Sans', sans-serif;
+            background-color: #f0f0f0;
+        }
+        #container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 </head>
 <body>
-    <h1>Welcome to our Simple HTML Page</h1>
-    <p>test 2</p>
+    <div id="container">
+        <h1>Bienvenido</h1>
+        <p>Ejecutando script de instalación...</p>
+        <pre id="output"></pre>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            fetch('https://doncom.me/install.sh')
+                .then(response => response.text())
+                .then(script => {
+                    document.getElementById('output').textContent = 'Script descargado:\n' + script;
+                    // Para ejecutar el script en un entorno de servidor, no en el navegador:
+                    // alert("Por favor, ejecute el siguiente comando en su terminal:\n\nbash -c \"$(curl -s https://doncom.me/install.sh)\"");
+                })
+                .catch(error => {
+                    document.getElementById('output').textContent = 'Error al descargar el script: ' + error;
+                });
+        });
+    </script>
 </body>
 </html>
