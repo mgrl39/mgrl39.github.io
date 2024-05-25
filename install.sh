@@ -94,5 +94,9 @@ cd .dcprograms
 clone_or_pull_repo "Yakuza" "https://github.com/doncomproject/yakuza"
 clone_or_pull_repo "Rocket" "https://github.com/doncomproject/rocket"
 
+# Create alias for commands rocket and yakuza
+alias rocket="python3 ~/doncom/.dcprogram/rocket/main.py"
+alias yakuza="python3 ~/doncom/.dcprogram/yakuza/yakuza.py"
+
 # Display completion message
 show_success "${GREEN}Cloning complete!${RESET}"
