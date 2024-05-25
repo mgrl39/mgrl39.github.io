@@ -92,8 +92,8 @@ clone_or_pull_repo "Arenita" "https://github.com/doncomproject/arenita"
 cd .dcprograms
 
 # Create alias for commands rocket and yakuza
-echo "alias rocket='python3 ~/doncom/.dcprogram/rocket/main.py'" >> ~/.bashrc
-echo "alias yakuza='python3 ~/doncom/.dcprogram/yakuza/yakuza.py'" >> ~/.bashrc
+echo "alias rocket='python3 ~/doncom/.dcprograms/rocket/main.py'" >> ~/.bashrc
+echo "alias yakuza='python3 ~/doncom/.dcprograms/yakuza/yakuza.py'" >> ~/.bashrc
 source ~/.bashrc
 
 # Create alias for commands rocket and yakuza
