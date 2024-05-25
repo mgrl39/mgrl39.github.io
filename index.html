@@ -27,6 +27,7 @@
             border-radius: 5px;
             white-space: pre-wrap;
             word-wrap: break-word;
+            cursor: pointer; /* Cambia el cursor al pasar el mouse por encima */
         }
     </style>
 </head>
@@ -34,7 +35,18 @@
     <div id="container">
         <h1>Bienvenido</h1>
         <p>Para instalar, ejecute el siguiente comando en su terminal:</p>
-        <pre>bash -c "$(curl https://doncom.me/install.sh)"</pre>
+        <pre id="commandBlock">bash -c "$(curl https://doncom.me/install.sh)"</pre>
     </div>
+
+    <script>
+        document.getElementById('commandBlock').addEventListener('click', function() {
+            navigator.clipboard.writeText(this.textContent).then(function() {
+                alert('Comando copiado al portapapeles!');
+            }).catch(function(error) {
+                console.error('Error al copiar el comando:', error);
+                alert('Hubo un problema al copiar el comando.');
+            });
+        });
+    </script>
 </body>
 </html>
