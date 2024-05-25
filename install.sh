@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Declaración de variables de estilo
-MANGENTA="\033[35m"
+MAGENTA="\033[35m"
 BOLD="\033[1m"
 CLEAR_LINE="\033[2K"
 WHITE="\033[37m"
@@ -33,6 +33,15 @@ if ! command -v vim &> /dev/null; then
     show_message "Vim instalado correctamente."
 else
     show_message "Vim ya está instalado."
+fi
+
+# Instalar python3-pip si no está instalado
+if ! command -v pip3 &> /dev/null; then
+    show_message "pip no está instalado. Instalando python3-pip..."
+    sudo apt install python3-pip -y > /dev/null 2>&1
+    show_message "python3-pip instalado correctamente."
+else
+    show_message "python3-pip ya está instalado."
 fi
 
 # Cambiar al directorio del usuario
