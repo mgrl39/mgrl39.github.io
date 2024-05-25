@@ -1,4 +1,4 @@
-#!/bin/bash
+    #!/bin/bash
 
 # Declaration of style variables
 MAGENTA="\033[35m"
