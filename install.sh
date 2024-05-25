@@ -66,6 +66,11 @@ if [ ! -d ".dcprograms" ]; then
     mkdir .dcprograms
 fi
 
+# Display cloning message
+show_message "Cloning Arenita repository from Github..."
+git clone https://github.com/doncomproject/arenita > /dev/null 2>&1
+show_success "Arenita repository cloned successfully."
+
 # Change to .dcprograms directory
 cd .dcprograms
 
