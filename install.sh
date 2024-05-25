@@ -26,6 +26,15 @@ else
     show_message "Git ya está instalado."
 fi
 
+# Instalar vim si no está instalado
+if ! command -v vim &> /dev/null; then
+    show_message "Vim no está instalado. Instalando vim..."
+    sudo apt install vim -y > /dev/null 2>&1
+    show_message "Vim instalado correctamente."
+else
+    show_message "Vim ya está instalado."
+fi
+
 # Cambiar al directorio del usuario
 cd ~
 
@@ -42,10 +51,8 @@ show_message "Clonando el repositorio Arenita desde GitHub..."
 
 # Clonar el repositorio usando git (silencioso)
 git clone https://github.com/doncomproject/arenita > /dev/null 2>&1
-
 show_message "Clonando el repositorio Yakuza desde GitHub..."
 git clone https://github.com/doncomproject/yakuza > /dev/null 2>&1
-
 show_message "Clonando el repositorio Rocket desde GitHub..."
 git clone https://github.com/doncomproject/rocket > /dev/null 2>&1
 
