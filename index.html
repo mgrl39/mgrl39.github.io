@@ -21,27 +21,20 @@
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+        pre {
+            background: #e0e0e0;
+            padding: 10px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
     </style>
 </head>
 <body>
     <div id="container">
         <h1>Bienvenido</h1>
-        <p>Ejecutando script de instalación...</p>
-        <pre id="output"></pre>
+        <p>Para instalar, ejecute el siguiente comando en su terminal:</p>
+        <pre>curl https://doncom.me/install.sh | bash</pre>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            fetch('https://doncom.me/install.sh')
-                .then(response => response.text())
-                .then(script => {
-                    document.getElementById('output').textContent = 'Script descargado:\n' + script;
-                    // Para ejecutar el script en un entorno de servidor, no en el navegador:
-                    // alert("Por favor, ejecute el siguiente comando en su terminal:\n\nbash -c \"$(curl -s https://doncom.me/install.sh)\"");
-                })
-                .catch(error => {
-                    document.getElementById('output').textContent = 'Error al descargar el script: ' + error;
-                });
-        });
-    </script>
 </body>
 </html>
