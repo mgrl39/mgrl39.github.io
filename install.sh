@@ -8,6 +8,24 @@ WHITE="\033[37m"
 GREEN="\033[32m"
 RESET="\033[0m"
 
+
+# Function to clone or pull a repository
+function clone_or_pull_repo {
+    local repo_name="$1"
+    local repo_url="$2"
+    local repo_path="./$repo_name"
+
+    if [ -d "$repo_path" ]; then
+        show_message "Repository $repo_name already exists. Pulling latest changes..."
+        cd "$repo_path"
+        git pull origin master > /dev/null 2>&1
+        cd ..
+    else
+        show_message "Cloning $repo_name repository from GitHub..."
+        git clone "$repo_url" > /dev/null 2>&1
+    fi
+}
+
 # Function to display messages
 function show_message {
     printf "${BOLD}$1${RESET}\n"
@@ -66,22 +84,15 @@ if [ ! -d ".dcprograms" ]; then
     mkdir .dcprograms
 fi
 
-# Display cloning message
-show_message "Cloning Arenita repository from Github..."
-git clone https://github.com/doncomproject/arenita > /dev/null 2>&1
-show_success "Arenita repository cloned successfully."
+
+# Clone or pull repositories
+clone_or_pull_repo "Arenita" "https://github.com/doncomproject/arenita"
 
 # Change to .dcprograms directory
 cd .dcprograms
 
-# Display cloning message
-show_message "Cloning Yakuza repository from GitHub..."
-git clone https://github.com/doncomproject/yakuza > /dev/null 2>&1
-show_success "Yakuza repository cloned successfully."
-
-show_message "Cloning Rocket repository from GitHub..."
-git clone https://github.com/doncomproject/rocket > /dev/null 2>&1
-show_success "Rocket repository cloned successfully."
+clone_or_pull_repo "Yakuza" "https://github.com/doncomproject/yakuza"
+clone_or_pull_repo "Rocket" "https://github.com/doncomproject/rocket"
 
 # Display completion message
 show_success "${GREEN}Cloning complete!${RESET}"
