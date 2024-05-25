@@ -5,30 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Simple Page</title>
     <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Public Sans', sans-serif;
-            background-color: #f0f0f0;
-        }
-        #container {
-            text-align: center;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-        pre {
-            background: #e0e0e0;
-            padding: 10px;
-            border-radius: 5px;
-            white-space: pre-wrap;
-            word-wrap: break-word;
-            cursor: pointer; /* Cambia el cursor al pasar el mouse por encima */
-        }
+    body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Roboto', sans-serif; /* Cambio de fuente a Roboto */
+    background-color: #f9fafb; /* Color de fondo más claro */
+    color: #333; /* Texto oscuro para contraste */
+}
+
+#container {
+    text-align: center;
+    background: #ffffff; /* Fondo blanco */
+    padding: 40px; /* Espaciado interior aumentado */
+    border-radius: 15px; /* Bordes redondeados más pronunciados */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra más profunda */
+    max-width: 600px; /* Ancho máximo del contenedor */
+    margin: auto; /* Centrado horizontalmente */
+}
+
+pre {
+    background: #e5e7eb; /* Fondo gris claro para el bloque de código */
+    padding: 20px; /* Espaciado interior aumentado */
+    border-radius: 10px; /* Bordes redondeados */
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    overflow-x: auto; /* Desplazamiento horizontal si el código es demasiado largo */
+    margin-top: 20px; /* Espacio entre el título y el bloque de código */
+    cursor: pointer; /* Cambio de cursor al pasar el mouse por encima */
+}
+
+pre:hover {
+    background: #dcdfe4; /* Cambio de color de fondo al pasar el mouse */
+}
     </style>
 </head>
 <body>
