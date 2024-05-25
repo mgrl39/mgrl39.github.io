@@ -1,61 +1,85 @@
 <!doctype html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Simple Page</title>
     <style>
     body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    font-family: 'Roboto', sans-serif; /* Cambio de fuente a Roboto */
-    background-color: #f9fafb; /* Color de fondo más claro */
-    color: #333; /* Texto oscuro para contraste */
-}
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Roboto', sans-serif; /* Font changed to Roboto */
+        color: #333; /* Darker text for contrast */
+        overflow: hidden; /* Hide overflowing animations */
+    }
 
-#container {
-    text-align: center;
-    background: #ffffff; /* Fondo blanco */
-    padding: 40px; /* Espaciado interior aumentado */
-    border-radius: 15px; /* Bordes redondeados más pronunciados */
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra más profunda */
-    max-width: 600px; /* Ancho máximo del contenedor */
-    margin: auto; /* Centrado horizontalmente */
-}
+    #container {
+        position: relative;
+        text-align: center;
+        background: #ffffff; /* White background */
+        padding: 40px; /* Increased inner spacing */
+        border-radius: 15px; /* More pronounced rounded corners */
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Deeper shadow */
+        max-width: 600px; /* Maximum container width */
+        margin: auto; /* Horizontally centered */
+    }
 
-pre {
-    background: #e5e7eb; /* Fondo gris claro para el bloque de código */
-    padding: 20px; /* Espaciado interior aumentado */
-    border-radius: 10px; /* Bordes redondeados */
-    white-space: pre-wrap;
-    word-wrap: break-word;
-    overflow-x: auto; /* Desplazamiento horizontal si el código es demasiado largo */
-    margin-top: 20px; /* Espacio entre el título y el bloque de código */
-    cursor: pointer; /* Cambio de cursor al pasar el mouse por encima */
-}
+    pre {
+        background: #e5e7eb; /* Light gray background for code block */
+        padding: 20px; /* Increased inner spacing */
+        border-radius: 10px; /* Rounded corners */
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-x: auto; /* Horizontal scrolling if code is too long */
+        margin-top: 20px; /* Space between title and code block */
+        cursor: pointer; /* Cursor change on hover */
+    }
 
-pre:hover {
-    background: #dcdfe4; /* Cambio de color de fondo al pasar el mouse */
-}
+    pre:hover {
+        background: #dcdfe4; /* Background color change on hover */
+    }
+
+    /* Background animations */
+    @keyframes animateBackground {
+        0% {
+            background-position: 0 0;
+        }
+        100% {
+            background-position: 100% 100%;
+        }
+    }
+
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        background: linear-gradient(-45deg, #ffcc00, #ff6600, #ff0066, #6600ff, #0033cc, #0099ff);
+        background-size: 600% 600%; /* Larger size for smooth animation */
+        animation: animateBackground 20s linear infinite; /* Adjust animation speed as needed */
+    }
     </style>
 </head>
 <body>
     <div id="container">
-        <h1>Bienvenido</h1>
-        <p>Para instalar, ejecute el siguiente comando en su terminal:</p>
+        <h1>DonCom Installer</h1>
+        <p>To install, run the following command in your terminal:</p>
         <pre id="commandBlock">bash -c "$(curl https://doncom.me/install.sh)"</pre>
     </div>
 
     <script>
         document.getElementById('commandBlock').addEventListener('click', function() {
             navigator.clipboard.writeText(this.textContent).then(function() {
-                alert('Comando copiado al portapapeles!');
+                alert('Command copied to clipboard!');
             }).catch(function(error) {
-                console.error('Error al copiar el comando:', error);
-                alert('Hubo un problema al copiar el comando.');
+                console.error('Error copying command:', error);
+                alert('There was a problem copying the command.');
             });
         });
     </script>
