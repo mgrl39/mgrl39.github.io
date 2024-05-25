@@ -8,6 +8,24 @@ WHITE="\033[37m"
 GREEN="\033[32m"
 RESET="\033[0m"
 
+# Función para mostrar mensajes
+function show_message {
+    printf "${BOLD}$1${RESET}\n"
+}
+
+# Actualizar la lista de paquetes (silencioso)
+show_message "Actualizando la lista de paquetes..."
+sudo apt update -y > /dev/null 2>&1
+
+# Instalar git si no está instalado
+if ! command -v git &> /dev/null; then
+    show_message "Git no está instalado. Instalando git..."
+    sudo apt install git -y > /dev/null 2>&1
+    show_message "Git instalado correctamente."
+else
+    show_message "Git ya está instalado."
+fi
+
 # Cambiar al directorio del usuario
 cd ~
 
@@ -19,11 +37,17 @@ fi
 # Cambiar al directorio doncom
 cd doncom
 
-# Mostrar mensaje de descarga
-printf "${BOLD}Descargando Arenita...${RESET}\n"
+# Mostrar mensaje de clonación
+show_message "Clonando el repositorio Arenita desde GitHub..."
 
-# Descargar el archivo usando wget
-wget https://doncom.me/install/arenita -q --show-progress
+# Clonar el repositorio usando git (silencioso)
+git clone https://github.com/doncomproject/arenita > /dev/null 2>&1
+
+show_message "Clonando el repositorio Yakuza desde GitHub..."
+git clone https://github.com/doncomproject/yakuza > /dev/null 2>&1
+
+show_message "Clonando el repositorio Rocket desde GitHub..."
+git clone https://github.com/doncomproject/rocket > /dev/null 2>&1
 
 # Mostrar mensaje de finalización
-printf "\n${GREEN}${BOLD}¡Descarga completa!${RESET}\n"
+show_message "${GREEN}¡Clonación completa!${RESET}"
