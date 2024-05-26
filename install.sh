@@ -68,6 +68,15 @@ else
     show_message "python3-pip is already installed."
 fi
 
+# Install p7zip-full if not installed
+if ! command -v 7z &> /dev/null; then
+    show_message "7z is not installed. Installing p7zip-full..."
+    sudo apt install p7zip-full -y > /dev/null 2>&1
+    show_success "p7zip-full installed successfully."
+else
+    show_message "p7zip-full is already installed."
+fi
+
 # Change to user directory
 cd ~
 
