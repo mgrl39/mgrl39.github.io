@@ -1,7 +1,7 @@
 # DonCom Page README
 
 ## Overview
-This README provides an overview of the DonCom webpage, including its structure, content, and purpose. The page is designed to offer various services related to ISO downloads. **It is important to note that the development and maintenance of this page are handled by [varmir1](https://github.com/varmir1]**, and it is hosted by a third party.
+This README provides an overview of the DonCom webpage, including its structure, content, and purpose. The page is designed to offer various services related to ISO downloads. **It is important to note that the development and maintenance of this page are handled by [varmir1](https://github.com/varmir1)**, and it is hosted by a third party.
 
 ## Page Structure
 
