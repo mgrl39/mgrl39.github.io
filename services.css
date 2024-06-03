@@ -11,8 +11,6 @@ header {
  }
  
  
- 
- 
  header h1 {
     margin: 0;
  }
@@ -35,18 +33,18 @@ header {
     width: 100%;
     top: 0;
     left: 0;
-    z-index: 1000;
+   
  }
  .services .service-item {
     background: url('https://media-public.canva.com/yXJcY/MAFK23yXJcY/1/s2.png');
     padding: 20px;
-    margin: 100px;
-    border: 2px solid #000000;
+    margin: 50px;
+    border: 8px solid #000000;
     display: inline-block;
     width: 30%;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    box-shadow: 0 0 100px rgba(0,0,0,100);
     color: white;
-    transition: border 0.3s ease;
+    transition: border 0.7s ease;
     
  } 
  .services .service-item:hover {
