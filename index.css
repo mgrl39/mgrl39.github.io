@@ -80,15 +80,14 @@ header {
  .principal-image {
    width: 100%; /* Asegura que el contenedor ocupe toda la anchura disponible */
    text-align: center; /* Centra el contenido del contenedor horizontalmente */
-    /* Si necesitas un margen superior para evitar el header */
+   margin-top: 80px; /* Si necesitas un margen superior para evitar el header */
 }
 
 .principal-image img {
    display: inline-block; /* Asegúrate de que la imagen sea un elemento en línea */
-    /* Ajusta el tamaño máximo de la imagen para que no exceda el contenedor */
-    /* Mantiene la proporción de la imagen */
+   max-width: 100%; /* Ajusta el tamaño máximo de la imagen para que no exceda el contenedor */
+   height: auto; /* Mantiene la proporción de la imagen */
 }
-
  .about{
     
     padding: 50px 0;
@@ -99,13 +98,12 @@ header {
     align-items: center;
     
  }
+ 
+ 
  .about-text {
     flex: 1;
     max-width: 45%;
     text-align: left;
- }
- .about-image {
-   text-align: right;
  }
  
  
