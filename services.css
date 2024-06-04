@@ -22,11 +22,13 @@ header {
     overflow: hidden;
  }
 
+
  h1 {
     font-size: 35px;
  }
  
  .services{
+
 
     background-color: #051722;
     color: #fff;
@@ -47,8 +49,8 @@ header {
     box-shadow: 0 0 100px rgba(0,0,0,100);
     color: white;
     transition: border 0.7s ease;
-    
- } 
+   
+ }
  .services .service-item:hover {
     border: 8px solid white;
  }
@@ -61,7 +63,7 @@ header {
     display: inline-block;
     padding: 25px 50px;
     border-radius: 10px;
-    margin: 0; 
+    margin: 0;
 }
 .features-list {
     list-style: none; /* Elimina los puntos de la lista */
@@ -69,10 +71,12 @@ header {
     margin-top: 30px; /* Espacio superior para la lista */
 }
 
+
 .features-list li {
     margin: 10px 0; /* Espacio entre los elementos de la lista */
     font-size: 16px; /* Tamaño de fuente */
 }
+
 
  footer {
     background: #333;
@@ -81,5 +85,5 @@ header {
     padding: 20px 0;
     position: relative;
     width: 100%;
-    
+   
  }
