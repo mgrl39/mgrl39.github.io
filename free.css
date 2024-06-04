@@ -4,11 +4,13 @@
     overflow: hidden;
  }
 
+
  h1 {
     font-size: 35px;
  }
  
  .services{
+
 
     background-color: #051722;
     color: #fff;
@@ -29,8 +31,8 @@
     box-shadow: 0 0 100px rgba(0,0,0,100);
     color: white;
     transition: border 0.7s ease;
-    
- } 
+   
+ }
  .services .service-item:hover {
     border: 8px solid white;
  }
@@ -43,7 +45,7 @@
     display: inline-block;
     padding: 25px 50px;
     border-radius: 10px;
-    margin: 0; 
+    margin: 0;
 }
 .features-list {
     list-style: none; /* Elimina los puntos de la lista */
@@ -51,9 +53,36 @@
     margin-top: 30px; /* Espacio superior para la lista */
 }
 
+
 .features-list li {
     margin: 10px 0; /* Espacio entre los elementos de la lista */
     font-size: 16px; /* Tamaño de fuente */
+}
+
+.download-main {
+    padding: 10px 20px;
+    border-radius: 0px;
+    background-color: transparent;
+    border-color: white;
+    color: white;
+    transition: border 0.2s ease;
+}
+.download-main:hover{
+    background-color: white;
+    color: #051722;
+}
+
+.download-client{
+    padding: 10px 20px;
+    border-radius: 0px;
+    background-color: transparent;
+    border-color: white;
+    color: white;
+    transition: border 0.2s ease;
+}
+.download-client:hover{
+    background-color: white;
+    color: #051722;
 }
 
  footer {
@@ -63,5 +92,5 @@
     padding: 20px 0;
     position: relative;
     width: 100%;
-    
+   
  }
