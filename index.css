@@ -1,199 +1,207 @@
 body {
-   font-family: Arial, sans-serif;
-   margin: 0;
-   padding: 0;
-   line-height: 1.6;
-   color: white;
-   background: url('https://github.com/mgrl39/mgrl39.github.io/blob/main/fondoceleste/FondoCreadoAmp.png?raw=true') center no-repeat;
-}
-
-header {
-    background: rgb(0, 12, 34);
-    color: #fff;
-    padding: 20px 0;
-    text-align: center;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    font-family: "YAEwfVo3f4M 0", fb, auto;
- }
-
- .second-title{
-   margin: 0;
-   padding: 0;
-   width: 100%;
-   overflow: hidden;
-   background-color: rgb(0, 12, 34);
-   margin-top: 200px;
-   text-align: center;
- }
-  .second-title h2{
-   font-size: 40px;
- }
-
- .container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
- }
- 
- body h1 {
+    font-family: Arial, sans-serif;
     margin: 0;
-    font-size: 80px;
- }
-
- 
- nav ul {
     padding: 0;
-    list-style: none;
-    margin: 0;
-    display: flex;
-    justify-content: center;
- }
- 
- 
- nav ul li {
-    margin: 0 15px;
- }
- 
- nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 10px 20px;
-    display: block;
-    background: #071d2b;
-    border-radius: 15px;
- }
- 
- 
- 
- 
- nav ul li a:hover {
-    background-color: #12316c;
-    border-radius: 15px;
+    line-height: 1.6;
     color: white;
+    background: url('https://github.com/mgrl39/mgrl39.github.io/blob/main/fondoceleste/FondoCreadoAmp.png?raw=true') center ;
+ }
+ 
+ 
+ header {
+     background: rgb(0, 12, 34);
+     color: #fff;
+     padding: 20px 0;
+     text-align: center;
+     position: fixed;
+     width: 100%;
+     top: 0;
+     left: 0;
+     z-index: 1000;
+     font-family: "YAEwfVo3f4M 0", fb, auto;
+  }
+ 
+ 
+  .second-title{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgb(0, 12, 34);
+    margin-top: 200px;
+    text-align: center;
+  }
+   .second-title h2{
+    font-size: 50px;
+  }
+ 
+ 
+  .container {
+     width: 80%;
+     margin: auto;
+     overflow: hidden;
+  }
+  
+  body h1 {
+     margin: 0;
+     font-size: 80px;
+  }
+ 
+ 
+  
+  nav ul {
+     padding: 0;
+     list-style: none;
+     margin: 0;
+     display: flex;
+     justify-content: center;
+  }
+  
+  
+  nav ul li {
+     margin: 0 15px;
+  }
+  
+  nav ul li a {
+     color: #fff;
+     text-decoration: none;
+     padding: 10px 20px;
+     display: block;
+     background: #071d2b;
+     border-radius: 15px;
+  }
+  
+  
+  
+  
+  nav ul li a:hover {
+     background-color: #12316c;
+     border-radius: 15px;
+     color: white;
+    
+  }
+  
+  .principal-image {
+    width: 100%; /* Asegura que el contenedor ocupe toda la anchura disponible */
+    text-align: center; /* Centra el contenido del contenedor horizontalmente */
+    margin-top: 80px; /* Si necesitas un margen superior para evitar el header */
+ }
+ 
+ 
+ .principal-image img {
+    display: inline-block; /* Asegúrate de que la imagen sea un elemento en línea */
+    max-width: 100%; /* Ajusta el tamaño máximo de la imagen para que no exceda el contenedor */
+    height: auto; /* Mantiene la proporción de la imagen */
+ }
+  .about{
+    
+     padding: 50px 0;
+     text-align: center;
+  }
+  .about-content {
+     display: flex;
+     align-items: center;
+     justify-content: space-between;
+     flex-wrap: wrap;
+  }
+  
+  
+  .about-text {
+     flex: 1;
+     max-width: 55%;
+     text-align: left;
+  }
+  .about-text h2{
+    font-size: 50px;
+  }
+  .about-text h3 {
+    font-size: 40px;
+    
+  }
+  .about-text p {
+    font-size: 20px;
+  }
+  
+  
+ 
+ 
+  
+  .about-image img {
+     max-width: 100%;
+     border-radius: 10px;
+     align-items: right;
+    
+  }
    
- }
- 
- .principal-image {
-   width: 100%; /* Asegura que el contenedor ocupe toda la anchura disponible */
-   text-align: center; /* Centra el contenido del contenedor horizontalmente */
-   margin-top: 80px; /* Si necesitas un margen superior para evitar el header */
-}
-
-.principal-image img {
-   display: inline-block; /* Asegúrate de que la imagen sea un elemento en línea */
-   max-width: 100%; /* Ajusta el tamaño máximo de la imagen para que no exceda el contenedor */
-   height: auto; /* Mantiene la proporción de la imagen */
-}
- .about{
+  .about img {
+     max-width: 100%;
+     height: auto;
+     margin-top: 20px;
     
-    padding: 50px 0;
-    text-align: center;
- }
- .about-content {
-    display: flex;
-    align-items: center;
+  }
+  
+  
+  .contact{
     
- }
- 
- 
- .about-text {
-    flex: 1;
-    max-width: 45%;
-    text-align: left;
- }
- 
- 
- 
-
- 
- .about-image img {
-    max-width: 100%;
-    border-radius: 10px;
-    align-items: right;
-    
- }
- 
- 
- .contact{
-    
-    padding: 50px 0;
-    text-align: center;
- }
- 
- 
- 
- 
- .about img {
-    max-width: 100%;
-    height: auto;
-    margin-top: 20px;
-    
- }
- 
- 
- 
- 
- 
- 
- 
- 
- .contact form {
-    max-width: 600px;
-    margin: auto;
-    text-align: left;
- }
- 
- 
- 
- 
- .contact label {
-    display: block;
-    margin: 10px 0 5px;
- }
- 
- 
- 
- 
- contact input, .contact textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
- }
- 
- 
- 
- 
- .contact button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    background: #333;
-    color: #fff;
-    border: none;
-    cursor: pointer;
- }
- 
- 
- 
- 
- .contact button:hover {
-    background: #555;
- }
- 
- 
- 
- 
- footer {
-    background: #333;
-    color: #fff;
-    text-align: center;
-    padding: 20px 0;
-    position: relative;
-    width: 100%;
- }
+     padding: 50px 0;
+     text-align: center;
+  }
+  
+  
+  
+  .contact form {
+     max-width: 600px;
+     margin: auto;
+     text-align: left;
+  }
+  
+  
+  
+  
+  .contact label {
+     display: block;
+     margin: 10px 0 5px;
+  }
+  
+  
+  
+  
+  contact input, .contact textarea {
+     width: 100%;
+     padding: 10px;
+     margin-bottom: 20px;
+     border: 1px solid #ddd;
+  }
+  
+  
+  
+  
+  .contact button {
+     display: block;
+     width: 100%;
+     padding: 10px;
+     background: #333;
+     color: #fff;
+     border: none;
+     cursor: pointer;
+  }
+  
+  
+  
+  
+  .contact button:hover {
+     background: #555;
+  }
+  
+  
+  
+  
+  footer {
+     background: #333;
+     color: #fff;
+     text-align: center;
+     padding: 20px 0;
+     position: relative;
+     width: 100%;
+  }
  
