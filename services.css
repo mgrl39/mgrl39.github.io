@@ -66,15 +66,15 @@ header {
     margin: 0;
 }
 .features-list {
-    list-style: none; /* Elimina los puntos de la lista */
-    padding: 0; /* Elimina el padding predeterminado */
-    margin-top: 30px; /* Espacio superior para la lista */
+    list-style: none; 
+    padding: 0;
+    margin-top: 30px; 
 }
 
 
 .features-list li {
-    margin: 10px 0; /* Espacio entre los elementos de la lista */
-    font-size: 16px; /* Tamaño de fuente */
+    margin: 10px 0; 
+    font-size: 16px; 
 }
 
 
