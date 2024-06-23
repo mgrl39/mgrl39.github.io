@@ -85,6 +85,7 @@ fi
 
 # Delete the executable file
 rm a.out
+rm colors.h
 
 # Delete the downloaded list of exercises
 rm list.txt
