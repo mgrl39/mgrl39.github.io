@@ -1,92 +1,92 @@
 #!/bin/bash
 
-# Definir colores
+# Define colors
 RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # Sin color
+NC='\033[0m' # No color
 
-# URL base del repositorio de GitHub
+# Base URL of the GitHub repository
 GITHUB_URL="https://raw.githubusercontent.com/mgrl39/42checker/main/libft"
 
-# Descargar la lista de ejercicios
-echo -e "${BLUE}Descargando la lista de ejercicios...${NC}"
+# Download the list of exercises
+echo -e "${BLUE}Downloading the list of exercises...${NC}"
 wget -q -O list.txt "$GITHUB_URL/list.txt"
 
-# Leer la lista de ejercicios en un array
-mapfile -t ejercicios < list.txt
+# Read the list of exercises into an array
+mapfile -t exercises < list.txt
 
-# Listar archivos .c en el directorio actual que están en la lista de ejercicios
-archivos_c=$(ls *.c)
-archivos_evaluables=()
+# List .c files in the current directory that are in the list of exercises
+c_files=$(ls *.c)
+evaluatable_files=()
 
-# Verificar archivos .c que se pueden evaluar
-for ejercicio in "${ejercicios[@]}"; do
-    archivo="ft_${ejercicio}.c"
-    if [[ -f "$archivo" ]]; then
-        archivos_evaluables+=("$archivo")
+# Check .c files that can be evaluated
+for exercise in "${exercises[@]}"; do
+    file="ft_${exercise}.c"
+    if [[ -f "$file" ]]; then
+        evaluatable_files+=("$file")
     fi
 done
 
-# Mostrar archivos .c en el directorio actual que se pueden evaluar
-echo -e "${YELLOW}Archivos .c en el directorio actual que se pueden evaluar:${NC}"
-for archivo in $archivos_c; do
-    if [[ " ${archivos_evaluables[@]} " =~ " ${archivo} " ]]; then
-        echo -e "${GREEN}$archivo${NC}"
+# Display .c files in the current directory that can be evaluated
+echo -e "${YELLOW}.c files in the current directory that can be evaluated:${NC}"
+for file in $c_files; do
+    if [[ " ${evaluatable_files[@]} " =~ " ${file} " ]]; then
+        echo -e "${GREEN}$file${NC}"
     fi
 done
 
-# Mostrar opciones de ejercicios conocidos
-echo -e "${YELLOW}Selecciona un ejercicio para evaluar:${NC}"
-select ejercicio in "${ejercicios[@]}"; do
-    if [[ " ${ejercicios[@]} " =~ " ${ejercicio} " ]]; then
-        echo -e "${GREEN}Has seleccionado: $ejercicio${NC}"
+# Display known exercise options
+echo -e "${YELLOW}Select an exercise to evaluate:${NC}"
+select exercise in "${exercises[@]}"; do
+    if [[ " ${exercises[@]} " =~ " ${exercise} " ]]; then
+        echo -e "${GREEN}You selected: $exercise${NC}"
         break
     else
-        echo -e "${RED}Opción no válida. Por favor, selecciona un ejercicio válido.${NC}"
+        echo -e "${RED}Invalid option. Please select a valid exercise.${NC}"
     fi
 done
 
-# Descargar el main correspondiente al ejercicio
-main_url="$GITHUB_URL/ft_${ejercicio}_main.c"
-ex_name="ft_${ejercicio}_main.c"
-echo -e "${BLUE}Descargando $ex_name...${NC}"
+# Download the main corresponding to the exercise
+main_url="$GITHUB_URL/ft_${exercise}_main.c"
+ex_name="ft_${exercise}_main.c"
+echo -e "${BLUE}Downloading $ex_name...${NC}"
 wget -q -O "$ex_name" "$main_url"
 
-# Verificar si el archivo del ejercicio existe
-if [[ ! -f "ft_${ejercicio}.c" ]]; then
-    echo -e "${RED}El archivo ft_${ejercicio}.c no existe en el directorio actual.${NC}"
+# Check if the exercise file exists
+if [[ ! -f "ft_${exercise}.c" ]]; then
+    echo -e "${RED}The file ft_${exercise}.c does not exist in the current directory.${NC}"
     exit 1
 fi
 
-# Compilar con el archivo descargado y el ejercicio seleccionado
-echo -e "${BLUE}Compilando: cc -Wall -Wextra -Werror $ex_name ft_${ejercicio}.c -o a.out${NC}"
-cc -Wall -Wextra -Werror $ex_name ft_${ejercicio}.c -o a.out
+# Compile with the downloaded file and the selected exercise
+echo -e "${BLUE}Compiling: cc -Wall -Wextra -Werror $ex_name ft_${exercise}.c -o a.out${NC}"
+cc -Wall -Wextra -Werror $ex_name ft_${exercise}.c -o a.out
 
-# Verificar si la compilación fue exitosa
+# Check if the compilation was successful
 if [[ ! -f "a.out" ]]; then
-    echo -e "${RED}Error en la compilación.${NC}"
+    echo -e "${RED}Compilation error.${NC}"
     exit 1
 fi
 
-# Eliminar el archivo main descargado
+# Delete the downloaded main file
 rm "$ex_name"
 
-# Ejecutar el archivo compilado
-echo -e "${BLUE}Ejecutando el archivo compilado:${NC}"
+# Run the compiled file
+echo -e "${BLUE}Running the compiled file:${NC}"
 ./a.out
 
-# Verificar el resultado de la ejecución
+# Check the result of the execution
 if [[ $? -ne 0 ]]; then
-    echo -e "${RED}Error en la ejecución del archivo compilado.${NC}"
+    echo -e "${RED}Execution error of the compiled file.${NC}"
     exit 1
 fi
 
-# Eliminar el archivo ejecutable
+# Delete the executable file
 rm a.out
 
-# Eliminar la lista de ejercicios descargada
+# Delete the downloaded list of exercises
 rm list.txt
 
-echo -e "${GREEN}Tests completados.${NC}"
+echo -e "${GREEN}Tests completed.${NC}"
