@@ -10,9 +10,22 @@ NC='\033[0m' # No color
 # Base URL of the GitHub repository
 GITHUB_URL="https://raw.githubusercontent.com/mgrl39/42checker/main/libft"
 
+# Function to download a file from GitHub repository
+download_file() {
+    local filename=$1
+    echo -e "${BLUE}Downloading $filename...${NC}"
+    wget -q -O "$filename" "$GITHUB_URL/$filename"
+    if [[ ! -f "$filename" ]]; then
+        echo -e "${RED}Failed to download $filename.${NC}"
+        exit 1
+    fi
+}
+
 # Download the list of exercises
-echo -e "${BLUE}Downloading the list of exercises...${NC}"
-wget -q -O list.txt "$GITHUB_URL/list.txt"
+download_file "list.txt"
+
+# Download the colors.h file
+download_file "colors.h"
 
 # Read the list of exercises into an array
 mapfile -t exercises < list.txt
@@ -51,8 +64,7 @@ done
 # Download the main corresponding to the exercise
 main_url="$GITHUB_URL/ft_${exercise}_main.c"
 ex_name="ft_${exercise}_main.c"
-echo -e "${BLUE}Downloading $ex_name...${NC}"
-wget -q -O "$ex_name" "$main_url"
+download_file "$ex_name"
 
 # Check if the exercise file exists
 if [[ ! -f "ft_${exercise}.c" ]]; then
@@ -62,7 +74,7 @@ fi
 
 # Compile with the downloaded file and the selected exercise
 echo -e "${BLUE}Compiling: cc -Wall -Wextra -Werror $ex_name ft_${exercise}.c -o a.out${NC}"
-cc -Wall -Wextra -Werror $ex_name ft_${exercise}.c -o a.out
+cc -Wall -Wextra -Werror "$ex_name" "ft_${exercise}.c" -o a.out
 
 # Check if the compilation was successful
 if [[ ! -f "a.out" ]]; then
@@ -85,9 +97,8 @@ fi
 
 # Delete the executable file
 rm a.out
-rm colors.h
 
-# Delete the downloaded list of exercises
-rm list.txt
+# Delete the downloaded list of exercises and colors.h
+rm list.txt colors.h
 
 echo -e "${GREEN}Tests completed.${NC}"
