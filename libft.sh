@@ -17,21 +17,29 @@ download_file() {
     wget -q -O "$filename" "$GITHUB_URL/$filename"
     if [[ ! -f "$filename" ]]; then
         echo -e "${RED}Failed to download $filename.${NC}"
+        cleanup
         exit 1
     fi
 }
 
-# Download the list of exercises
-download_file "list.txt"
+# Cleanup function to remove downloaded files
+cleanup() {
+    echo -e "${BLUE}Cleaning up...${NC}"
+    rm -f list.txt colors.h a.out "${ex_name}"
+}
 
-# Download the colors.h file
+# Set trap to call cleanup on EXIT
+trap cleanup EXIT
+
+# Download the list of exercises and colors.h file
+download_file "list.txt"
 download_file "colors.h"
 
 # Read the list of exercises into an array
 mapfile -t exercises < list.txt
 
 # List .c files in the current directory that are in the list of exercises
-c_files=$(ls *.c)
+c_files=$(ls *.c 2>/dev/null)
 evaluatable_files=()
 
 # Check .c files that can be evaluated
@@ -44,10 +52,8 @@ done
 
 # Display .c files in the current directory that can be evaluated
 echo -e "${YELLOW}.c files in the current directory that can be evaluated:${NC}"
-for file in $c_files; do
-    if [[ " ${evaluatable_files[@]} " =~ " ${file} " ]]; then
-        echo -e "${GREEN}$file${NC}"
-    fi
+for file in "${evaluatable_files[@]}"; do
+    echo -e "${GREEN}$file${NC}"
 done
 
 # Display known exercise options
@@ -82,9 +88,6 @@ if [[ ! -f "a.out" ]]; then
     exit 1
 fi
 
-# Delete the downloaded main file
-rm "$ex_name"
-
 # Run the compiled file
 echo -e "${BLUE}Running the compiled file:${NC}"
 ./a.out
@@ -94,11 +97,5 @@ if [[ $? -ne 0 ]]; then
     echo -e "${RED}Execution error of the compiled file.${NC}"
     exit 1
 fi
-
-# Delete the executable file
-rm a.out
-
-# Delete the downloaded list of exercises and colors.h
-rm list.txt colors.h
 
 echo -e "${GREEN}Tests completed.${NC}"
