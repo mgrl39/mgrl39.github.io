@@ -18,7 +18,7 @@ case "$SHELL_NAME" in
 esac
 
 # Define the alias command
-ALIAS_COMMAND='alias testlibft="bash -c \"$(wget -qO- https://doncom.me/libft.sh)\""'
+ALIAS_COMMAND='alias testlibft='bash -c "$(wget -qO- https://doncom.me/libft.sh)"'
 
 # Check if the alias already exists in the configuration file
 if grep -q "alias testlibft=" "$CONFIG_FILE"; then
