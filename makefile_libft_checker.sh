@@ -120,6 +120,7 @@ check_compilation() {
 
     local objects=""
     local missing_objects=""
+    local errors=0
 
     # Verificar la existencia de los archivos .o
     for func in "${mandatory_functions[@]}"; do
@@ -147,6 +148,32 @@ check_compilation() {
     return $errors
 }
 
+# Función para limpiar archivos .o y libft.a
+clean_up() {
+    echo "Limpiando archivos .o y libft.a..."
+
+    # Eliminar archivos .o
+    rm -f *.o
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}[OK]${DEF_COLOR} Archivos .o eliminados correctamente."
+    else
+        echo -e "${RED}[KO]${DEF_COLOR} Error al eliminar archivos .o."
+    fi
+
+    # Eliminar libft.a
+    rm -f libft.a
+    if [ $? -eq 0 ]; then
+        echo -e "${GREEN}[OK]${DEF_COLOR} Archivo libft.a eliminado correctamente."
+    else
+        echo -e "${RED}[KO]${DEF_COLOR} Error al eliminar el archivo libft.a."
+    fi
+}
+
 # Llamada a la función de verificación
 check_makefile
-exit $?
+errors=$?
+
+# Limpiar archivos antes de salir
+clean_up
+
+exit $errors
