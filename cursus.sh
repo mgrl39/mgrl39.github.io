@@ -38,6 +38,7 @@ echo "Choose an option:"
 echo -e "${RED}1) ${MAGENTA}Check libft files..."
 echo -e "${RED}2) ${MAGENTA}Check include 'libft.h' in each file"
 echo -e "${RED}3) ${MAGENTA}42checker "
+echo -e "${RED}4) ${MAGENTA}Makefile checker "
 echo -e "${RED}0) ${MAGENTA}Exit"
 echo -e "${DEF_COLOR}"
 
@@ -55,6 +56,8 @@ case $option in
     3)
         execute_command https://doncom.me/libft.sh
         ;;
+    4)
+        execute_command https://doncom.me/makefile_libft_checker.sh
     0)
         echo "Exiting..."
         ;;
