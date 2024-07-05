@@ -17,8 +17,7 @@ print_libft_logo() {
     printf "${RED}  _    ___ ___ ___ _____ \n"
     printf "${MAGENTA} | |  |_ _| _ ) __|_   _|\n"
     printf "${RED} | |__ | || _ \ _|  | |  \n"
-    printf "${MAGENTA} |____|___|___/_|   |_|  "
-    printf "${RED}by mgrl39\n"
+    printf "${MAGENTA} |____|___|___/_|   |_|  ${RED}by mgrl39\n"
 }
 
 # Function to execute commands using wget and bash
@@ -33,12 +32,12 @@ clear
 print_libft_logo
 
 # Menu options
-echo -e "${MANGENTA}"
+echo -e "${MAGENTA}"
 echo "Choose an option:"
 echo -e "${RED}1) ${MAGENTA}Check libft files..."
 echo -e "${RED}2) ${MAGENTA}Check include 'libft.h' in each file"
-echo -e "${RED}3) ${MAGENTA}42checker "
-echo -e "${RED}4) ${MAGENTA}Makefile checker "
+echo -e "${RED}3) ${MAGENTA}42checker"
+echo -e "${RED}4) ${MAGENTA}Makefile checker"
 echo -e "${RED}0) ${MAGENTA}Exit"
 echo -e "${DEF_COLOR}"
 
@@ -48,16 +47,16 @@ read -p "Select an option: " option
 # Execute corresponding action
 case $option in
     1)
-        execute_command https://doncom.me/libft_finder.sh
+        execute_command https://domcom.me/libft_finder.sh
         ;;
     2)
-        execute_command https://doncom.me/check_libft_includes.sh
+        execute_command https://domcom.me/check_libft_includes.sh
         ;;
     3)
-        execute_command https://doncom.me/libft.sh
+        execute_command https://domcom.me/libft.sh
         ;;
     4)
-        execute_command https://doncom.me/makefile_libft_checker.sh
+        execute_command https://domcom.me/makefile_libft_checker.sh
         ;;
     0)
         echo "Exiting..."
