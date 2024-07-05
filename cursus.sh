@@ -58,6 +58,7 @@ case $option in
         ;;
     4)
         execute_command https://doncom.me/makefile_libft_checker.sh
+        ;;
     0)
         echo "Exiting..."
         ;;
