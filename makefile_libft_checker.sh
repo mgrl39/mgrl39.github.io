@@ -1,50 +1,50 @@
 #!/bin/bash
 
-# Colores para la salida
+# Colors for output
 DEF_COLOR='\033[0;39m'
 RED='\033[1;91m'
 GREEN='\033[1;92m'
 
-# Nombre por defecto del Makefile
+# Default Makefile name
 makefile="Makefile"
 
-# Función para verificar cada regla del Makefile
+# Function to check each rule in the Makefile
 check_makefile() {
     local errors=0
 
-    # Verificar las banderas de compilación adecuadas
+    # Check proper compilation flags
     grep -E -q "(-Wall|-Wextra|-Werror)" "$makefile"
     if [ $? -ne 0 ]; then
-        echo -e "${RED}[KO]${DEF_COLOR} Falta la definición correcta de las banderas de compilación en el Makefile."
+        echo -e "${RED}[KO]${DEF_COLOR} Proper compilation flags are missing in the Makefile."
         errors=$((errors + 1))
     else
-        echo -e "${GREEN}[OK]${DEF_COLOR} Las banderas de compilación (-Wall -Wextra -Werror) están definidas correctamente."
+        echo -e "${GREEN}[OK]${DEF_COLOR} Compilation flags (-Wall -Wextra -Werror) are defined correctly."
     fi
 
-    # Verificar las reglas esenciales (all, clean, fclean, re)
+    # Check essential rules (all, clean, fclean, re)
     check_rule "all"
     check_rule "clean"
     check_rule "fclean"
     check_rule "re"
 
-    # Ejecutar make para compilar y luego verificar la compilación
+    # Run make to compile and then verify compilation
     make &> /dev/null
     local result_make=$?
     if [ $result_make -ne 0 ]; then
-        echo -e "${RED}[KO]${DEF_COLOR} Error al ejecutar make."
+        echo -e "${RED}[KO]${DEF_COLOR} Error executing make."
         return 1
     fi
 
-    # Verificar que se crean todos los .o requeridos y libft.a
+    # Check if all required .o files and libft.a are created
     check_compilation
 
-    # Si no hay errores hasta aquí, ejecutar make clean y make fclean
+    # If no errors so far, run make clean and make fclean
     make clean &> /dev/null
     local result_clean=$?
     if [ $result_clean -eq 0 ]; then
-        echo -e "${GREEN}[OK]${DEF_COLOR} make clean se ejecutó correctamente."
+        echo -e "${GREEN}[OK]${DEF_COLOR} make clean executed successfully."
     else
-        echo -e "${RED}[KO]${DEF_COLOR} Error al ejecutar make clean."
+        echo -e "${RED}[KO]${DEF_COLOR} Error executing make clean."
         errors=$((errors + 1))
         return $errors
     fi
@@ -52,61 +52,61 @@ check_makefile() {
     make fclean &> /dev/null
     local result_fclean=$?
     if [ $result_fclean -eq 0 ]; then
-        echo -e "${GREEN}[OK]${DEF_COLOR} make fclean se ejecutó correctamente."
+        echo -e "${GREEN}[OK]${DEF_COLOR} make fclean executed successfully."
     else
-        echo -e "${RED}[KO]${DEF_COLOR} Error al ejecutar make fclean."
+        echo -e "${RED}[KO]${DEF_COLOR} Error executing make fclean."
         errors=$((errors + 1))
         return $errors
     fi
 
-    # Ejecutar make nuevamente y verificar que no vuelva a compilar todo si no es necesario
+    # Run make again and verify it does not unnecessarily recompile everything
     make &> /dev/null
     local result_make_second=$?
 
-    # Verificar si make volvió a compilar todo
+    # Check if make recompiled everything unnecessarily
     if [ $result_make_second -eq 0 ]; then
-        echo -e "${GREEN}[OK]${DEF_COLOR} make no volvió a compilar todo el código innecesariamente."
+        echo -e "${GREEN}[OK]${DEF_COLOR} make did not unnecessarily recompile all code."
     else
-        echo -e "${RED}[KO]${DEF_COLOR} make volvió a compilar todo el código innecesariamente."
+        echo -e "${RED}[KO]${DEF_COLOR} make unnecessarily recompiled all code."
         errors=$((errors + 1))
         return $errors
     fi
 
-    # Finalmente, ejecutar make re y verificar
+    # Finally, run make re and verify
     make re &> /dev/null
     local result_re=$?
     if [ $result_re -eq 0 ]; then
-        echo -e "${GREEN}[OK]${DEF_COLOR} make re se ejecutó correctamente."
+        echo -e "${GREEN}[OK]${DEF_COLOR} make re executed successfully."
     else
-        echo -e "${RED}[KO]${DEF_COLOR} Error al ejecutar make re."
+        echo -e "${RED}[KO]${DEF_COLOR} Error executing make re."
         errors=$((errors + 1))
         return $errors
     fi
 
-    # Verificar nuevamente que se crean todos los .o requeridos y libft.a después de make re
+    # Check again if all required .o files and libft.a are created after make re
     check_compilation
 
-    # Si no hay errores, mostrar que todo está OK
+    # If no errors, show everything is OK
     if [ $errors -eq 0 ]; then
-        echo -e "${GREEN}[OK]${DEF_COLOR} El Makefile cumple con todas las normas requeridas."
+        echo -e "${GREEN}[OK]${DEF_COLOR} Makefile complies with all required standards."
     fi
 
     return $errors
 }
 
-# Función para verificar la existencia de una regla en el Makefile
+# Function to check the existence of a rule in the Makefile
 check_rule() {
     local rule="$1"
     grep -q "^$rule:" "$makefile"
     if [ $? -ne 0 ]; then
-        echo -e "${RED}[KO]${DEF_COLOR} Falta la regla '$rule' en el Makefile."
+        echo -e "${RED}[KO]${DEF_COLOR} Rule '$rule' is missing in the Makefile."
         return 1
     else
-        echo -e "${GREEN}[OK]${DEF_COLOR} La regla '$rule' está definida en el Makefile."
+        echo -e "${GREEN}[OK]${DEF_COLOR} Rule '$rule' is defined in the Makefile."
     fi
 }
 
-# Función para verificar la compilación de todos los .o y libft.a
+# Function to check compilation of all .o files and libft.a
 check_compilation() {
     local mandatory_functions=(
         "ft_isalpha" "ft_isdigit" "ft_isalnum" "ft_isascii" "ft_isprint"
@@ -122,7 +122,7 @@ check_compilation() {
     local missing_objects=""
     local errors=0
 
-    # Verificar la existencia de los archivos .o
+    # Check existence of .o files
     for func in "${mandatory_functions[@]}"; do
         object_file="ft_$(echo $func | sed 's/ft_//').o"
         if [ ! -f "$object_file" ]; then
@@ -132,48 +132,48 @@ check_compilation() {
     done
 
     if [ $errors -ne 0 ]; then
-        echo -e "${RED}[KO]${DEF_COLOR} Faltan los siguientes archivos .o: $missing_objects"
+        echo -e "${RED}[KO]${DEF_COLOR} The following .o files are missing: $missing_objects"
     else
-        echo -e "${GREEN}[OK]${DEF_COLOR} Se han creado todos los archivos .o requeridos."
+        echo -e "${GREEN}[OK]${DEF_COLOR} All required .o files have been created."
     fi
 
-    # Verificar la existencia de libft.a
+    # Check existence of libft.a
     if [ ! -f "libft.a" ]; then
-        echo -e "${RED}[KO]${DEF_COLOR} No se ha creado el archivo libft.a."
+        echo -e "${RED}[KO]${DEF_COLOR} libft.a file has not been created."
         errors=$((errors + 1))
     else
-        echo -e "${GREEN}[OK]${DEF_COLOR} Se ha creado el archivo libft.a."
+        echo -e "${GREEN}[OK]${DEF_COLOR} libft.a file has been created."
     fi
 
     return $errors
 }
 
-# Función para limpiar archivos .o y libft.a
+# Function to clean .o files and libft.a
 clean_up() {
-    echo "Limpiando archivos .o y libft.a..."
+    echo "Cleaning .o files and libft.a..."
 
-    # Eliminar archivos .o
+    # Remove .o files
     rm -f *.o
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}[OK]${DEF_COLOR} Archivos .o eliminados correctamente."
+        echo -e "${GREEN}[OK]${DEF_COLOR} .o files deleted successfully."
     else
-        echo -e "${RED}[KO]${DEF_COLOR} Error al eliminar archivos .o."
+        echo -e "${RED}[KO]${DEF_COLOR} Error deleting .o files."
     fi
 
-    # Eliminar libft.a
+    # Remove libft.a
     rm -f libft.a
     if [ $? -eq 0 ]; then
-        echo -e "${GREEN}[OK]${DEF_COLOR} Archivo libft.a eliminado correctamente."
+        echo -e "${GREEN}[OK]${DEF_COLOR} libft.a file deleted successfully."
     else
-        echo -e "${RED}[KO]${DEF_COLOR} Error al eliminar el archivo libft.a."
+        echo -e "${RED}[KO]${DEF_COLOR} Error deleting libft.a file."
     fi
 }
 
-# Llamada a la función de verificación
+# Call the verification function
 check_makefile
 errors=$?
 
-# Limpiar archivos antes de salir
+# Clean files before exiting
 clean_up
 
 exit $errors
