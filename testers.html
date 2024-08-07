@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>DonCom Installer</title>
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="DonCom Installer">
+    <meta property="og:description" content="DonCom is a comprehensive and secure solution for managing cybercafés, offering session control and comprehensive management.">
+    <meta property="og:image" content="https://doncom.me/images/og-image.jpg">
+    <meta property="og:url" content="https://doncom.me">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="DonCom">
+    
+    <style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: 'Roboto', sans-serif;
+        color: #e5e7eb; /* Light text color */
+        background-color: #121212; /* Dark background */
+    }
+
+    #container {
+        position: relative;
+        text-align: center;
+        background: #1e1e1e; /* Darker background for container */
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: auto;
+    }
+
+    pre {
+        background: #333; /* Dark background for code block */
+        padding: 20px;
+        border-radius: 10px;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        overflow-x: auto;
+        margin-top: 20px;
+        cursor: pointer;
+        color: #e5e7eb; /* Light text color for code */
+    }
+
+    pre:hover {
+        background: #444; /* Slightly lighter background on hover */
+    }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <h1>TESTING...</h1>
+        <h2>(Developing) Libft</h2>
+        <pre id="commandBlock1">bash -c "$(wget -qO- doncom.me/libftrev.sh)"</pre>
+        
+        <h2>(Developing): Push_swap</h2>
+        <pre id="commandBlock2">bash -c "$(wget -qO- doncom.me/push_swap.sh)"</pre>
+        
+        <h2>(Developing): Francinette Image in sgoinfre</h2>
+        <pre id="commandBlock3">bash -c "$(wget -qO- doncom.me/francinette-sgoinfre.sh)"</pre>
+    </div>
+
+    <script>
+        document.querySelectorAll('pre').forEach(pre => {
+            pre.addEventListener('click', function() {
+                navigator.clipboard.writeText(this.textContent).then(function() {
+                    alert('Command copied to clipboard!');
+                }).catch(function(error) {
+                    console.error('Error copying command:', error);
+                    alert('There was a problem copying the command.');
+                });
+            });
+        });
+    </script>
+</body>
+</html>
