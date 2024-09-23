@@ -1,4 +1,7 @@
 #!/bin/bash
+#echo "in maintenance 🔧 mgrl39"
+
+#!/bin/bash
 
 # Define colors
 RED='\033[0;31m'
