@@ -1,2 +1,2 @@
 #!/bin/bash
-#echo "in maintenance 🔧 mgrl39"
+echo "in maintenance 🔧 mgrl39"
