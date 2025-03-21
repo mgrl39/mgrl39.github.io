@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>mgrl39</title>
+    <script src="libs/tailwindcdn.js"></script>
+    <link rel="stylesheet" href="libs/fontawesome/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#000',
+                        card: '#111',
+                        accent: '#0070f3'
+                    }
+                }
+            }
+        }
+    </script>
+    <link rel="stylesheet" href="styles/general.css">
+    <link rel="icon" href="data:,">
+</head>
+<body class="bg-dark text-white font-sans min-h-screen flex items-center justify-center p-4">
+    <div id="mouse-glow" class="fixed inset-0 mouse-glow z-0 opacity-0 transition-opacity duration-1000"></div>
+    <div class="fixed inset-0 bg-dots z-0"></div>
+    
+    <div class="w-full max-w-lg mx-auto z-10 relative">
+        <h1 class="text-2xl font-bold text-center mb-6">mgrl39</h1>
+        
+        <div class="command-palette rounded-lg shadow-xl overflow-hidden">
+            <div class="flex border-b border-gray-800" id="tabs-container">
+                <button id="tab-repos" class="flex-1 px-4 py-2 text-sm font-medium focus:outline-none text-accent border-b-2 border-accent">
+                    <i class="fas fa-code-branch mr-2"></i>Proyectos
+                </button>
+                <button id="tab-subdomains" class="flex-1 px-4 py-2 text-sm font-medium focus:outline-none text-gray-400 hover:text-white">
+                    <i class="fas fa-globe mr-2"></i>Subdominios
+                </button>
+            </div>
+            
+            <div class="p-3 flex items-center border-b border-gray-800">
+                <i class="fas fa-search text-gray-500 mr-3"></i>
+                <input type="text" id="search-input" placeholder="Buscar repositorios" 
+                    class="bg-transparent border-none outline-none flex-1 text-white placeholder-gray-500">
+            </div>
+            
+            <div id="results-container" class="max-h-96 overflow-y-auto">
+                <div id="loading" class="p-4 text-center text-gray-400">
+                    <i class="fas fa-spinner fa-spin mr-2"></i> Cargando...
+                </div>
+            </div>
+        </div>
+        
+        <div class="mt-4 text-center text-gray-600 text-xs">
+            <kbd class="px-1 py-0.5 bg-card rounded">Ctrl</kbd> + <kbd class="px-1 py-0.5 bg-card rounded">K</kbd> para buscar
+        </div>
+    </div>
+
+    <script src="scripts/main.js"></script>
+</body>
+</html> 

@@ -1,0 +1,30 @@
+{
+    "username": "mgrl39",
+    "title": "mgrl39",
+    "subtitle": "Explora mis proyectos en GitHub",
+    "featuredRepos": [
+        "fungi",
+        "puigsounds"
+    ],
+    "subdomains": [
+        {
+            "name": "Fusiona elements",
+            "url": "https://fusiona-elements.doncom.me",
+            "description": "Joc de fusió de elements",
+            "icon": "fas fa-gamepad"
+        },
+        {
+            "name": "Gestio d'esdeveniments",
+            "url": "https://gestio-esdeveniments.doncom.me",
+            "description": "Gestio d'esdeveniments",
+            "icon": "fas fa-mouse"
+        },
+        {
+            "name": "Practica Formulari",
+            "url": "https://practica-formulari.doncom.me",
+            "description": "Practica Formulari",
+            "icon": "fas fa-file-alt"
+        }
+    ],
+    "footer": "Bona nit!"
+} 
