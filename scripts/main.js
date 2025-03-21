@@ -17,17 +17,9 @@ async function loadConfig() {
         config = await response.json();
         
         // Actualizar elementos de UI con la configuración
-        document.querySelector('h1').textContent = config.title || config.username;
-        if (config.subtitle) {
-            document.querySelector('p.text-gray-400').textContent = config.subtitle;
-        }
-        if (config.footer) {
-            document.querySelector('footer .container').innerHTML = config.footer;
-        }
-        
-        // Añadir switch de vista si hay subdominios
-        if (config.subdomains && config.subdomains.length > 0) {
-            addViewSwitcher();
+        const titleElement = document.querySelector('h1');
+        if (titleElement) {
+            titleElement.textContent = config.title || config.username;
         }
         
         return true;
@@ -73,21 +65,28 @@ function setCurrentView(view) {
     const reposTab = document.getElementById('tab-repos');
     const subdomainsTab = document.getElementById('tab-subdomains');
     
-    if (reposTab && subdomainsTab) {
-        if (view === 'repos') {
-            reposTab.className = 'px-4 py-2 text-sm font-medium focus:outline-none text-accent border-b-2 border-accent';
-            subdomainsTab.className = 'px-4 py-2 text-sm font-medium focus:outline-none text-gray-400 hover:text-white';
-            
-            // Mostrar buscador y cambiar placeholder
-            document.getElementById('search-input').placeholder = 'Buscar repositorios';
-            document.querySelector('.command-palette > div:nth-child(2)').classList.remove('hidden');
-        } else {
-            reposTab.className = 'px-4 py-2 text-sm font-medium focus:outline-none text-gray-400 hover:text-white';
-            subdomainsTab.className = 'px-4 py-2 text-sm font-medium focus:outline-none text-accent border-b-2 border-accent';
-            
-            // Mostrar buscador y cambiar placeholder
-            document.getElementById('search-input').placeholder = 'Buscar subdominios';
-            document.querySelector('.command-palette > div:nth-child(2)').classList.remove('hidden');
+    if (!reposTab || !subdomainsTab) {
+        console.error('No se encontraron los elementos de las pestañas');
+        return;
+    }
+    
+    if (view === 'repos') {
+        reposTab.className = 'flex-1 px-4 py-2 text-sm font-medium focus:outline-none text-accent border-b-2 border-accent';
+        subdomainsTab.className = 'flex-1 px-4 py-2 text-sm font-medium focus:outline-none text-gray-400 hover:text-white';
+        
+        // Cambiar placeholder
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+            searchInput.placeholder = 'Buscar repositorios';
+        }
+    } else {
+        reposTab.className = 'flex-1 px-4 py-2 text-sm font-medium focus:outline-none text-gray-400 hover:text-white';
+        subdomainsTab.className = 'flex-1 px-4 py-2 text-sm font-medium focus:outline-none text-accent border-b-2 border-accent';
+        
+        // Cambiar placeholder
+        const searchInput = document.getElementById('search-input');
+        if (searchInput) {
+            searchInput.placeholder = 'Buscar subdominios';
         }
     }
     
@@ -335,23 +334,33 @@ async function loadRepositories() {
     }
 }
 
-// Inicializar
+// Inicializar - con comprobaciones adicionales
 document.addEventListener('DOMContentLoaded', async () => {
     // Primero cargar la configuración
     await loadConfig();
     
     // Configurar los botones de pestaña
-    document.getElementById('tab-repos').addEventListener('click', () => {
-        setCurrentView('repos');
-    });
+    const tabRepos = document.getElementById('tab-repos');
+    const tabSubdomains = document.getElementById('tab-subdomains');
     
-    document.getElementById('tab-subdomains').addEventListener('click', () => {
-        setCurrentView('subdomains');
-    });
+    if (tabRepos) {
+        tabRepos.addEventListener('click', () => {
+            setCurrentView('repos');
+        });
+    }
+    
+    if (tabSubdomains) {
+        tabSubdomains.addEventListener('click', () => {
+            setCurrentView('subdomains');
+        });
+    }
     
     // Iniciar con la vista de repositorios
     setCurrentView('repos');
     
     // Enfocar automáticamente el buscador
-    setTimeout(() => document.getElementById('search-input').focus(), 300);
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        setTimeout(() => searchInput.focus(), 300);
+    }
 }); 
