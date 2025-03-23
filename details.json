@@ -29,7 +29,7 @@
             "name": "Emoji API",
             "url": "https://emoji-api.doncom.me",
             "description": "API que te devuelve el emoji siguiente",
-            "icon": "fas fa-solid fa-face-grin-wide"
+            "icon": "fas fa-file-alt"
         }
     ],
     "footer": "Bona nit!"
