@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>mgrl39 · Webs</title>
+<style>
+  :root {
+    --bg: #0d1117; --panel: #161b22; --border: #30363d; --text: #e6edf3;
+    --muted: #8b949e; --accent: #2f81f7; --hover: #1f2937; --kbd: #21262d;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #f6f8fa; --panel: #ffffff; --border: #d0d7de; --text: #1f2328;
+      --muted: #59636e; --accent: #0969da; --hover: #eef2f6; --kbd: #f0f2f4;
+    }
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 15px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  main { max-width: 960px; margin: 0 auto; padding: 48px 16px; }
+  header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; flex-wrap: wrap; }
+  header img { width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--border); }
+  header h1 { margin: 0; font-size: 22px; }
+  header p { margin: 0; color: var(--muted); }
+  .search-btn {
+    margin-left: auto; display: flex; align-items: center; gap: 10px;
+    background: var(--panel); color: var(--muted); border: 1px solid var(--border);
+    border-radius: 8px; padding: 8px 12px; cursor: pointer; font: inherit; min-width: 220px;
+  }
+  .search-btn:hover { border-color: var(--accent); }
+  .search-btn span { flex: 1; text-align: left; }
+  kbd {
+    background: var(--kbd); border: 1px solid var(--border); border-bottom-width: 2px;
+    border-radius: 4px; padding: 0 6px; font: 12px ui-monospace, monospace; color: var(--muted);
+  }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; display: flex; flex-direction: column; gap: 6px;
+    text-decoration: none; color: inherit; transition: border-color .15s;
+  }
+  .card:hover { border-color: var(--accent); }
+  .card h3 { margin: 0; font-size: 16px; color: var(--accent); }
+  .card p { margin: 0; color: var(--muted); font-size: 13px; flex: 1; }
+  .card .meta { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); gap: 8px; }
+  .card .meta a { color: var(--muted); }
+  .status { color: var(--muted); padding: 24px 0; }
+
+  /* Command palette */
+  .overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,.5); backdrop-filter: blur(2px);
+    display: none; align-items: flex-start; justify-content: center; padding: 12vh 16px 16px; z-index: 10;
+  }
+  .overlay.open { display: flex; }
+  .palette {
+    width: 100%; max-width: 600px; background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; box-shadow: 0 20px 60px rgba(0,0,0,.4); overflow: hidden;
+  }
+  .palette input {
+    width: 100%; border: 0; border-bottom: 1px solid var(--border); background: transparent;
+    color: var(--text); font: inherit; font-size: 17px; padding: 16px 18px; outline: none;
+  }
+  .results { list-style: none; margin: 0; padding: 6px; max-height: 50vh; overflow-y: auto; }
+  .results li {
+    padding: 10px 12px; border-radius: 8px; cursor: pointer; display: flex; flex-direction: column;
+  }
+  .results li.active { background: var(--hover); outline: 1px solid var(--accent); }
+  .results .name { font-weight: 600; }
+  .results .name mark { background: none; color: var(--accent); }
+  .results .url { font-size: 12px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .results .empty { color: var(--muted); cursor: default; }
+  .hint {
+    display: flex; gap: 14px; flex-wrap: wrap; padding: 8px 14px; border-top: 1px solid var(--border);
+    font-size: 12px; color: var(--muted);
+  }
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <img id="avatar" alt="" src="https://github.com/mgrl39.png?size=112">
+    <div>
+      <h1>mgrl39</h1>
+      <p id="subtitle">Repos con web (GitHub Pages)</p>
+    </div>
+    <button class="search-btn" id="openBtn" type="button">
+      <span>Buscar web…</span><kbd>Ctrl</kbd><kbd>K</kbd>
+    </button>
+  </header>
+  <div id="status" class="status">Cargando repos…</div>
+  <div id="grid" class="grid"></div>
+</main>
+
+<div class="overlay" id="overlay">
+  <div class="palette" role="dialog" aria-label="Buscar webs">
+    <input id="q" placeholder="Escribe para buscar…" autocomplete="off" spellcheck="false">
+    <ul class="results" id="results"></ul>
+    <div class="hint">
+      <span><kbd>↑</kbd><kbd>↓</kbd> navegar</span>
+      <span><kbd>Enter</kbd> abrir web</span>
+      <span><kbd>Ctrl</kbd>+<kbd>Enter</kbd> abrir repo</span>
+      <span><kbd>Esc</kbd> cerrar</span>
+    </div>
+  </div>
+</div>
+
+<script>
+const USER = "mgrl39";
+const CACHE_KEY = "gh-pages-cache-" + USER;
+const CACHE_TTL = 10 * 60 * 1000; // 10 min, la API sin token permite 60 peticiones/hora
+
+let sites = [];
+let filtered = [];
+let active = 0;
+
+const $ = (id) => document.getElementById(id);
+
+function pagesUrl(repo) {
+  if (repo.homepage) return repo.homepage;
+  if (repo.name.toLowerCase() === `${USER.toLowerCase()}.github.io`) return `https://${USER}.github.io/`;
+  return `https://${USER}.github.io/${repo.name}/`;
+}
+
+async function fetchRepos() {
+  try {
+    const cached = JSON.parse(localStorage.getItem(CACHE_KEY) || "null");
+    if (cached && Date.now() - cached.t < CACHE_TTL) return cached.data;
+  } catch {}
+
+  const all = [];
+  for (let page = 1; ; page++) {
+    const res = await fetch(`https://api.github.com/users/${USER}/repos?per_page=100&page=${page}&sort=pushed`);
+    if (!res.ok) throw new Error(res.status === 403 ? "Límite de la API de GitHub alcanzado, prueba en un rato." : `Error ${res.status}`);
+    const batch = await res.json();
+    all.push(...batch);
+    if (batch.length < 100) break;
+  }
+
+  const data = all
+    .filter((r) => r.has_pages)
+    .map((r) => ({
+      name: r.name,
+      description: r.description || "",
+      url: pagesUrl(r),
+      repo: r.html_url,
+      pushed: r.pushed_at,
+      language: r.language || "",
+    }));
+
+  try { localStorage.setItem(CACHE_KEY, JSON.stringify({ t: Date.now(), data })); } catch {}
+  return data;
+}
+
+function escapeHtml(s) {
+  return s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+}
+
+// Búsqueda difusa simple: las letras deben aparecer en orden; puntúa por cercanía
+function fuzzy(query, text) {
+  const q = query.toLowerCase(), t = text.toLowerCase();
+  if (!q) return { score: 0, idx: [] };
+  const sub = t.indexOf(q);
+  if (sub !== -1) return { score: 1000 - sub, idx: [...Array(q.length)].map((_, i) => sub + i) };
+  let ti = 0, score = 0, last = -1; const idx = [];
+  for (const ch of q) {
+    ti = t.indexOf(ch, ti);
+    if (ti === -1) return null;
+    score += last === ti - 1 ? 5 : 1;
+    idx.push(ti); last = ti; ti++;
+  }
+  return { score, idx };
+}
+
+function highlight(text, idx) {
+  const set = new Set(idx);
+  return [...text].map((c, i) => set.has(i) ? `<mark>${escapeHtml(c)}</mark>` : escapeHtml(c)).join("");
+}
+
+function renderGrid() {
+  $("grid").innerHTML = sites.map((s) => `
+    <a class="card" href="${escapeHtml(s.url)}" target="_blank" rel="noopener">
+      <h3>${escapeHtml(s.name)}</h3>
+      <p>${escapeHtml(s.description) || "&nbsp;"}</p>
+      <div class="meta">
+        <span>${escapeHtml(s.language)}</span>
+        <span>${new Date(s.pushed).toLocaleDateString()}</span>
+      </div>
+    </a>`).join("");
+}
+
+function renderResults() {
+  const q = $("q").value.trim();
+  filtered = sites
+    .map((s) => {
+      const m = fuzzy(q, s.name) || (q && s.description.toLowerCase().includes(q.toLowerCase()) ? { score: -1, idx: [] } : null);
+      return m && { ...s, m };
+    })
+    .filter(Boolean)
+    .sort((a, b) => b.m.score - a.m.score);
+  active = Math.min(active, Math.max(filtered.length - 1, 0));
+
+  $("results").innerHTML = filtered.length
+    ? filtered.map((s, i) => `
+        <li data-i="${i}" class="${i === active ? "active" : ""}">
+          <span class="name">${highlight(s.name, s.m.idx)}</span>
+          <span class="url">${escapeHtml(s.url)}</span>
+        </li>`).join("")
+    : `<li class="empty">Sin resultados</li>`;
+
+  $("results").querySelector(".active")?.scrollIntoView({ block: "nearest" });
+}
+
+function openPalette() {
+  $("overlay").classList.add("open");
+  $("q").value = ""; active = 0;
+  renderResults();
+  $("q").focus();
+}
+function closePalette() { $("overlay").classList.remove("open"); }
+
+function go(i, toRepo) {
+  const s = filtered[i];
+  if (!s) return;
+  window.open(toRepo ? s.repo : s.url, "_blank", "noopener");
+  closePalette();
+}
+
+document.addEventListener("keydown", (e) => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+    e.preventDefault();
+    $("overlay").classList.contains("open") ? closePalette() : openPalette();
+  } else if (e.key === "/" && document.activeElement.tagName !== "INPUT") {
+    e.preventDefault(); openPalette();
+  }
+});
+
+$("q").addEventListener("input", () => { active = 0; renderResults(); });
+$("q").addEventListener("keydown", (e) => {
+  if (e.key === "ArrowDown") { e.preventDefault(); active = (active + 1) % Math.max(filtered.length, 1); renderResults(); }
+  else if (e.key === "ArrowUp") { e.preventDefault(); active = (active - 1 + filtered.length) % Math.max(filtered.length, 1); renderResults(); }
+  else if (e.key === "Enter") { e.preventDefault(); go(active, e.ctrlKey || e.metaKey); }
+  else if (e.key === "Escape") closePalette();
+});
+$("results").addEventListener("click", (e) => {
+  const li = e.target.closest("li[data-i]");
+  if (li) go(+li.dataset.i, e.ctrlKey || e.metaKey);
+});
+$("overlay").addEventListener("click", (e) => { if (e.target === e.currentTarget) closePalette(); });
+$("openBtn").addEventListener("click", openPalette);
+
+fetchRepos()
+  .then((data) => {
+    sites = data;
+    $("status").textContent = "";
+    $("status").style.display = "none";
+    $("subtitle").textContent = `${sites.length} repos con web (GitHub Pages)`;
+    renderGrid();
+  })
+  .catch((err) => { $("status").textContent = err.message; });
+</script>
+</body>
+</html>
